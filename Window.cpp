@@ -1,74 +1,84 @@
 #include "Window.h"
-#include <SFML/Window/Event.hpp>
-#include <gl/glew.h>
+
+#include "GL/glew.h"
+#include <SFML/Window/Mouse.hpp>
 #include <iostream>
 
-de::Window::Window() : _window(sf::VideoMode(900,800), "Distend Engine", sf::Style::Default, sf::ContextSettings(24,8,8,4,5))
+// create a window
+void Window::createWindow(const int& width, const int& height, const std::string& title, const unsigned& style, const sf::ContextSettings& settings)
 {
-	glewExperimental = GL_TRUE;
-	if(glewInit() != GLEW_OK)
-	{
-		std::cout << "Glew could not be started" << std::endl;
-	}
-	glClearColor(0.2f, 0.5f, 0.9f, 1.0f);
+	_window.create(sf::VideoMode(width, height), title, style, settings);
+	_window.setFramerateLimit(144);
+	_window.setMouseCursorVisible(false);
+	createGLContext();
+}
+
+// returns true if the window is still open
+bool Window::isOpen() const
+{
+	return _window.isOpen();
+}
+
+// sets the icon of our window ( at the top )
+void Window::setWindowIcon(const std::string& iconPath)
+{
+	sf::Image image;
+	image.loadFromFile(iconPath);
+	_window.setIcon(image.getSize().x, image.getSize().y, image.getPixelsPtr());
+}
+
+void Window::centerMouse()
+{
+	sf::Mouse::setPosition(sf::Vector2i(_window.getSize().x / 2, _window.getSize().y / 2) ,_window);
 }
 
 
-de::Window::~Window()
-{
-	_window.close();
-}
-
-void de::Window::setSize(const glm::ivec2& windowSize)
-{
-	_window.setSize(sf::Vector2u(windowSize.x, windowSize.y));
-}
-
-void de::Window::setSize(const int& winX, const int& winY)
-{
-	_window.setSize(sf::Vector2u(winX, winY));
-}
-
-void de::Window::setSize(const sf::Vector2u& windowSize)
-{
-	_window.setSize(windowSize);
-}
-
-void de::Window::setClearColor(const sf::Color& color)
-{
-	glClearColor(color.r / 255, color.g / 255, color.b / 255, color.a / 255);
-}
-
-void de::Window::setClearColor(const glm::vec4& color)
-{
-	glClearColor(color.x, color.y, color.z, color.w);
-}
-
-void de::Window::pollEvents()
-{
-	sf::Event event;
-	while(_window.pollEvent(event))
-	{
-		if(event.type == sf::Event::Closed)
-		{
-			_window.close();
-		}
-		if(event.type == sf::Event::KeyPressed)
-		{
-			if(event.key.code == sf::Keyboard::Escape)
-			{
-				_window.close();
-			}
-		}
-	}
-}
-
-void de::Window::clear()
+// clears using openGL clear
+void Window::clear() const
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void de::Window::display()
+// displays using a double buffer
+void Window::display()
 {
 	_window.display();
+}
+
+// closes the window
+void Window::close()
+{
+	_window.close();
+}
+
+// setups up our window with glew
+void Window::createGLContext() const
+{
+	auto error = glewInit();
+
+	if(error != GLEW_OK)
+	{
+		std::cout << "OpenGL could not be created" << std::endl;
+	}
+	else
+	{
+		glewExperimental = GL_TRUE;
+	}
+}
+
+glm::ivec2 Window::getSize()
+{
+	auto windowSize = _window.getSize();
+	return glm::ivec2(windowSize.x, windowSize.y);
+}
+
+glm::ivec2 Window::getMousePos()
+{
+	auto mousePos = sf::Mouse::getPosition(_window);
+	return glm::ivec2(mousePos.x, mousePos.y);
+}
+
+bool Window::pollEvents(sf::Event& event)
+{
+	return _window.pollEvent(event);
 }

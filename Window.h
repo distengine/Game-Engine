@@ -1,48 +1,42 @@
 #pragma once
-// Distend Engine namespace Window Class
-// This Class handles the cross platform window creation process
-#include <glm/vec2.hpp>
-#include <glm/vec4.hpp>
+#include <string>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <glm/detail/type_vec2.hpp>
 
-namespace de {
-	class Window
-	{
-	public:
-		// This will create a window with 900x800, "Distend Enginge", and default window / 4.5 openGL context settings
-		Window();
-		// This will destroy the window
-		~Window();
-		// We won't initialize all the setters/getters are the moment, only the ones we need
+class Window
+{
+public:
+	// Create a window 
+	// Size 1 - 2
+	// Title 3
+	// Window Style 4 - FullScreen, Default, Borderless
+	// Settings 5 - For OpenGL and depth/stencil settings + AA
+	void createWindow(const int& width, const int& height,
+		const std::string& title, const unsigned& style = sf::Style::Default, const sf::ContextSettings& settings = sf::ContextSettings());
+	// Check if the window is still open
+	bool isOpen() const;
+	// Checks if the window is active
+	bool isActive() const;
+	// Check to see if our event queue has any events left to poll
+	bool pollEvents(sf::Event& event);
+	// Returns a glm::ivec2 of the size
+	glm::ivec2 getSize();
+	// Returns the position of the mouse
+	glm::ivec2 getMousePos();
+	// Set window icon
+	void setWindowIcon(const std::string& iconPath);
+	// Sets the mouse position
+	void centerMouse();
+	// Clears the window with openGL
+	void clear() const;
+	// Displays the window
+	void display();
+	// Closes the window
+	void close();
 
-		void setSize(const glm::ivec2& windowSize);
-		void setSize(const int& winX, const int& winY);
-		void setSize(const sf::Vector2u& windowSize);
+private:
+	// Setup our OpenGL settings
+	void createGLContext() const;
 
-		void setClearColor(const sf::Color& color);
-		void setClearColor(const glm::vec4& color);
-
-		const glm::ivec2& glmGetSize() const
-		{
-			return glm::ivec2(_window.getSize().x, _window.getSize().y);
-		}
-		const sf::Vector2u& sfGetSize() const
-		{
-			return _window.getSize();
-		}
-		
-		// This will poll all window/mouse/keyboard events
-		void pollEvents();
-		// calls our clear buffer bits
-		void clear();
-		// Displays the window to the screen
-		void display();
-		// Returns the current window state
-		bool isOpen() const
-		{
-			return _window.isOpen();
-		}
-	private:
-		sf::RenderWindow _window;
-	};
-}
+	sf::RenderWindow _window;
+};

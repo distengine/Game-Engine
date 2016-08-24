@@ -2,26 +2,14 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <string>
 
 
-de::GLSL::GLSL(): _programID(0), _numAttributes(0)
+GLSL::GLSL(): _programID(0), _numAttributes(0)
 {
 }
 
-de::GLSL::~GLSL()
-{
-	//We don't need the program anymore.
-	glDeleteProgram(_programID);
-	//Don't leak shaders either.
-	for (auto& it : _shaders)
-	{
-		glDeleteShader(it.second);
-	}
-}
 
-
-void de::GLSL::addShader(GLenum shaderType, const std::string& shaderFilePath)
+void GLSL::addShader(GLenum shaderType, const std::string& shaderFilePath)
 {
 	// if no program is created, make one.
 	if(_programID == 0)
@@ -40,7 +28,7 @@ void de::GLSL::addShader(GLenum shaderType, const std::string& shaderFilePath)
 	compileShader(shaderFilePath);
 }
 
-void de::GLSL::compileShader(const std::string& shaderFilePath)
+void GLSL::compileShader(const std::string& shaderFilePath)
 {
 	// load our file into a stream and store it into a string
 	std::ifstream fileStream(shaderFilePath);
@@ -86,12 +74,12 @@ void de::GLSL::compileShader(const std::string& shaderFilePath)
 	}
 }
 
-//Adds an attribute to our shader. Should be called between compiling and linking.
-void de::GLSL::addAttribute(const std::string& attributeName) {
+//Adds an attribute to our shader. SHould be called between compiling and linking.
+void GLSL::addAttribute(const std::string& attributeName) {
 	glBindAttribLocation(_programID, _numAttributes++, attributeName.c_str());
 }
 
-GLint de::GLSL::getUniformLocation(const std::string& uniformName) const
+GLint GLSL::getUniformLocation(const std::string& uniformName) const
 {
 	GLint location = glGetUniformLocation(_programID, uniformName.c_str());
 	if (location == GL_INVALID_INDEX) {
@@ -100,7 +88,7 @@ GLint de::GLSL::getUniformLocation(const std::string& uniformName) const
 	return location;
 }
 
-void de::GLSL::use() const
+void GLSL::use() const
 {
 	glUseProgram(_programID);
 	for (int i = 0; i < _numAttributes; i++) {
@@ -108,7 +96,7 @@ void de::GLSL::use() const
 	}
 }
 
-void de::GLSL::unuse() const
+void GLSL::unuse() const
 {
 	glUseProgram(0);
 	for (int i = 0; i < _numAttributes; i++) {
@@ -116,7 +104,18 @@ void de::GLSL::unuse() const
 	}
 }
 
-void de::GLSL::linkShaders()
+void GLSL::deleteShaders()
+{
+	//We don't need the program anymore.
+	glDeleteProgram(_programID);
+	//Don't leak shaders either.
+	for (auto& it : _shaders)
+	{
+		glDeleteShader(it.second);
+	}
+}
+
+void GLSL::linkShaders()
 {
 	// attach our shaders to the program
 	for(auto& it : _shaders)
@@ -146,17 +145,6 @@ void de::GLSL::linkShaders()
 	for(auto& it : _shaders)
 	{
 		glDetachShader(_programID, it.second);
-		glDeleteShader(it.second);
-	}
-}
-
-void de::GLSL::deleteShaders()
-{
-	//We don't need the program anymore.
-	glDeleteProgram(_programID);
-	//Don't leak shaders either.
-	for (auto& it : _shaders)
-	{
 		glDeleteShader(it.second);
 	}
 }
