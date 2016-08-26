@@ -1,8 +1,6 @@
 #include "Game.h"
 #include <GL/glew.h>
 #include <SFML/Window/Event.hpp>
-#include <glm/gtc/quaternion.hpp>
-#include <iostream>
 
 
 void Game::start()
@@ -29,7 +27,7 @@ void Game::loadGLSettings()
 	glDepthFunc(GL_LESS);
 	glClearColor(0.2f, 0.5f, 0.6f, 1.0f);
 	_sky.setupSkyBox(std::vector<std::string>{
-		"Textures/Skybox/SkyNight/right-sky-night.png",
+			"Textures/Skybox/SkyNight/right-sky-night.png",
 			"Textures/Skybox/SkyNight/left-sky-night.png",
 			"Textures/Skybox/SkyNight/top-sky-night.png",
 			"Textures/Skybox/SkyNight/bot-sky-night.png",
@@ -38,6 +36,7 @@ void Game::loadGLSettings()
 	});
 	_cube.create(glm::vec3(2), glm::vec3(3), std::vector<std::string>{"Textures/wall.png"});
 	_cube2.create(glm::vec3(5), glm::vec3(2), glm::vec3(0.5, 0.3, 0.4));
+	_box.create(_cube);
 }
 
 void Game::gameLoop()

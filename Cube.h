@@ -1,6 +1,5 @@
 #pragma once
 #include "Drawable.h"
-#include "BoundingBox.h"
 
 // Cube is a drawable object
 class Cube : public Drawable
@@ -23,8 +22,7 @@ private:
 	void loadData();
 	// Override our Drawable::loadBuffers() function to not send any indices
 	void loadBuffers() override;
-	// Store the cube' color
+	// Store the cube' color, and transformations
 	glm::vec3 _color, _scale, _position, _rotation;
 	float _angle;
-
 };

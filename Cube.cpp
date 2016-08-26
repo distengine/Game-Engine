@@ -12,7 +12,7 @@ void Cube::create(const glm::vec3& cubePosition, const glm::vec3& size, const gl
 	model = glm::translate(model, _position);
 	model = glm::scale(model, _scale);
 	_color = cubeColor;
-	loadShaders(false);
+	loadShaders(false, std::map<const GLenum, const std::string>{{GL_VERTEX_SHADER, "Shaders/sampler2DVS.glsl"},{GL_FRAGMENT_SHADER, "Shaders/sampler2DFS.glsl"}});
 	loadData();
 }
 
@@ -79,10 +79,8 @@ void Cube::render()
 	// Bind the VAO, draw the object, then unbind the vao + shaders
 	glBindVertexArray(vao);
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-	glDrawElements(GL_LINES, indices.size(), GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
 	shaders.unuse();
-
 }
 
 // Stores Vertex::Position/Color/UV

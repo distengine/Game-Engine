@@ -83,7 +83,9 @@ GLint GLSL::getUniformLocation(const std::string& uniformName) const
 {
 	GLint location = glGetUniformLocation(_programID, uniformName.c_str());
 	if (location == GL_INVALID_INDEX) {
-		std::cout << "Uniform " + uniformName + " not found in shader!" << std::endl;
+		auto it = _shaders.begin();
+		std::advance(it, 1);
+		std::cout << "Uniform " + uniformName + " not found in " << it->first << std::endl;
 	}
 	return location;
 }

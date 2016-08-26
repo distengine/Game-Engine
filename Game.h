@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "SkyBox.h"
 #include "Cube.h"
+#include "BoundingBox.h"
 
 class Game
 {
@@ -21,4 +22,5 @@ private:
 	SkyBox _sky;
 	Cube _cube, _cube2;
 	bool _paused;
+	BoundingBox _box;
 };
