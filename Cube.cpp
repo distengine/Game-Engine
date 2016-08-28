@@ -44,14 +44,13 @@ void Cube::update(glm::mat4& view, glm::mat4& projection)
 {
 	this->view = view;
 	this->projection = projection;
-
 }
 
 void Cube::setRotation(const float& angle, const glm::vec3& rotation)
 {
 	_rotation = rotation;
 	_angle = angle;
-	model = glm::rotate(model, _angle, rotation);
+	model = glm::rotate(model, glm::radians(_angle), rotation);
 }
 
 void Cube::move(const glm::vec3& position)

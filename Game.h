@@ -22,5 +22,5 @@ private:
 	SkyBox _sky;
 	Cube _cube, _cube2;
 	bool _paused;
-	BoundingBox _box;
+	BoundingBox _bb, _bb2;
 };

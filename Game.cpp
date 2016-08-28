@@ -15,8 +15,8 @@ void Game::loadSubsytems()
 {
 	_window.createWindow(1920, 1080, "Distend", sf::Style::Default, sf::ContextSettings(24, 8, 8, 4, 5));
 
-	_camera.setPosition(glm::vec3(0.0f, 0.0f, -10.0f));
-	_camera.setLookAt(glm::vec3(0.0f, 1.0f, 0.0f));
+	_camera.setPosition(glm::vec3(0.0f, 0.0f, 10.0f));
+	_camera.setLookAt(glm::vec3(0.0f, -1.0f, 0.0f));
 	_camera.setViewport(0, 0, _window.getSize().x, _window.getSize().y);
 }
 
@@ -34,9 +34,10 @@ void Game::loadGLSettings()
 			"Textures/Skybox/SkyNight/front-sky-night.png",
 			"Textures/Skybox/SkyNight/back-sky-night.png"
 	});
-	_cube.create(glm::vec3(2), glm::vec3(3), std::vector<std::string>{"Textures/wall.png"});
-	_cube2.create(glm::vec3(5), glm::vec3(2), glm::vec3(0.5, 0.3, 0.4));
-	_box.create(_cube);
+	_cube.create(glm::vec3(1), glm::vec3(1), std::vector<std::string>{"Textures/wall.png"});
+	_cube2.create(glm::vec3(0,0,-10), glm::vec3(1), glm::vec3(0.5, 0.3, 0.4));
+	_bb.create(_cube.vertices);
+	_bb2.create(_cube2.vertices);
 }
 
 void Game::gameLoop()
@@ -69,6 +70,8 @@ void Game::update(float dt)
 	_sky.update(view, projection);
 	_cube.update(view, projection);
 	_cube2.update(view, projection);
+	_bb.update(_cube.model, view, projection);
+	_bb2.update(_cube2.model, view, projection);
 }
 
 void Game::processInput()
@@ -88,11 +91,47 @@ void Game::processInput()
 			}
 			if(event.key.code == sf::Keyboard::Add)
 			{
-				_cube.move(glm::vec3(0.0f, 0.0f, 1.0f));
+				if(_bb.testCollision(_bb2))
+				{
+					_cube.move(glm::vec3(0.0f, 0.0f, -1.0f));
+				}
+				else
+				{
+					_cube.move(glm::vec3(0.0f, 0.0f, 1.0f));
+				}
 			}
 			if (event.key.code == sf::Keyboard::Subtract)
 			{
-				_cube.move(glm::vec3(0.0f, 0.0f, -1.0f));
+				if (_bb.testCollision(_bb2))
+				{
+					_cube.move(glm::vec3(0.0f, 0.0f, 1.0f));
+				}
+				else
+				{
+					_cube.move(glm::vec3(0.0f, 0.0f, -1.0f));
+				}
+			}
+			if(event.key.code == sf::Keyboard::Numpad9)
+			{
+				if (_bb.testCollision(_bb2))
+				{
+					_cube.setRotation(45.0f, glm::vec3(0, -1, 0));
+				}
+				else
+				{
+					_cube.setRotation(45.0f, glm::vec3(0, 1, 0));
+				}
+			}
+			if (event.key.code == sf::Keyboard::Numpad7)
+			{
+				if (_bb.testCollision(_bb2))
+				{
+					_cube.setRotation(45.0f, glm::vec3(0, 1, 0));
+				}
+				else
+				{
+					_cube.setRotation(45.0f, glm::vec3(1, 0, 0));
+				}
 			}
 		}
 		if(event.type == sf::Event::GainedFocus)
@@ -112,6 +151,8 @@ void Game::render()
 
 	_cube.render();
 	_cube2.render();
+	_bb.render();
+	_bb2.render();
 
 	_sky.renderSkyBox();
 
