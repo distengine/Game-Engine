@@ -4,6 +4,7 @@
 #include "SkyBox.h"
 #include "Cube.h"
 #include "BoundingBox.h"
+#include "Direction.h"
 
 class Game
 {
@@ -23,4 +24,5 @@ private:
 	Cube _cube, _cube2;
 	bool _paused;
 	BoundingBox _bb, _bb2;
+	Direction _dir;
 };

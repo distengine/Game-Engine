@@ -16,9 +16,9 @@ Camera::Camera(): _viewportX(0), _viewportY(0), _windowX(1920), _windowY(1080), 
 	_cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 	_fov = 45.0f;
 	_cameraPosDelta = glm::vec3(0);
-	_cameraScale = 0.03f;
-	_maxPitch = 5;
-	_maxHeading = 5;
+	_cameraScale = 0.01f;
+	_maxPitch = 1;
+	_maxHeading = 1;
 	_moveCamera = false;
 
 }
@@ -64,7 +64,7 @@ void Camera::update()
 		// Damping for smooth camera
 		_cameraHeading *= 0.5f;
 		_cameraPitch *= 0.5f;
-		_cameraPosDelta *= 0.8f;
+		_cameraPosDelta *= 0.5f;
 	}
 	// compute the mvp
 	_view = glm::lookAt(_cameraPos, _cameraLookAt, _cameraUp);
@@ -160,8 +160,8 @@ void Camera::processMouseMovement(Window& window)
 		yOffset *= _cameraScale;
 		if (_moveCamera)
 		{
-			changeHeading(.08f * xOffset);
-			changePitch(.08f * yOffset);
+			changeHeading(.05f * xOffset);
+			changePitch(.05f * yOffset);
 		}
 	}
 	window.centerMouse();

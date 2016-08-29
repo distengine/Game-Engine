@@ -38,6 +38,7 @@ void Game::loadGLSettings()
 	_cube2.create(glm::vec3(0,0,-10), glm::vec3(1), glm::vec3(0.5, 0.3, 0.4));
 	_bb.create(_cube.vertices);
 	_bb2.create(_cube2.vertices);
+	_dir.create(glm::vec3(10, 10, 0), glm::vec3(0, 1, 0), glm::vec3(0.8f, 0.3f, 0.1f));
 }
 
 void Game::gameLoop()
@@ -72,6 +73,7 @@ void Game::update(float dt)
 	_cube2.update(view, projection);
 	_bb.update(_cube.model, view, projection);
 	_bb2.update(_cube2.model, view, projection);
+	_dir.update(view, projection);
 }
 
 void Game::processInput()
@@ -153,7 +155,7 @@ void Game::render()
 	_cube2.render();
 	_bb.render();
 	_bb2.render();
-
+	_dir.render();
 	_sky.renderSkyBox();
 
 	_window.display();
