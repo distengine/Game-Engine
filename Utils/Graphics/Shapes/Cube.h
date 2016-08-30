@@ -1,5 +1,5 @@
 #pragma once
-#include "Drawable.h"
+#include "../Drawable.h"
 
 // Cube is a drawable object
 class Cube : public Drawable

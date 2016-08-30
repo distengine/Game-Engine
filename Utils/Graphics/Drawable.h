@@ -2,7 +2,7 @@
 
 // Distend
 #include "GLSL.h"
-#include "GLTexture.h"
+#include "../Engine/GLTexture.h"
 
 // GL and glm
 #include <GL/glew.h>
