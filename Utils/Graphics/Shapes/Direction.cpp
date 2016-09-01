@@ -14,7 +14,6 @@ void Direction::create(const glm::vec3& directionPosition, const glm::vec3& dire
 	loadBuffers();
 	model = glm::translate(model, directionPosition);
 	model = glm::rotate(model, glm::radians(90.0f), directionVector);
-
 }
 
 void Direction::update(glm::mat4& view, glm::mat4& projection)
@@ -40,18 +39,32 @@ void Direction::render()
 	shaders.unuse();
 }
 
+void Direction::setPos(const glm::vec3& position)
+{
+	model = glm::mat4();
+	model = glm::translate(model, position);
+}
+
 void Direction::loadData()
 {
 	std::initializer_list<glm::vec3> tempPos{
-		glm::vec3(-0.01f,  0.01f,  1.0f),
-		glm::vec3( 0.01f,  0.01f,  1.0f),
-		glm::vec3(-0.01f, -0.01f,  1.0f),
-		glm::vec3( 0.01f, -0.01f,  1.0f),
+		glm::vec3(-0.01f,  0.01f,  0.6f),
+		glm::vec3( 0.01f,  0.01f,  0.6f),
+		glm::vec3(-0.01f, -0.01f,  0.6f),
+		glm::vec3( 0.01f, -0.01f,  0.6f),
 				   	 	   
-		glm::vec3(-0.01f,  0.01f,  -1.0f),
-		glm::vec3( 0.01f,  0.01f,  -1.0f),
-		glm::vec3(-0.01f, -0.01f,  -1.0f),
-		glm::vec3( 0.01f, -0.01f,  -1.0f),
+		glm::vec3(-0.01f,  0.01f,  -0.6f),
+		glm::vec3( 0.01f,  0.01f,  -0.6f),
+		glm::vec3(-0.01f, -0.01f,  -0.6f),
+		glm::vec3( 0.01f, -0.01f,  -0.6f),
+
+		glm::vec3(-0.1f,  0.01f,  0.6f),
+		glm::vec3( 0.1f,  0.01f,  0.6f),
+		
+		glm::vec3(-0.1f, -0.01f,  0.6f),
+		glm::vec3( 0.1f, -0.01f,  0.6f),
+
+		glm::vec3(0.0f, 0.0f, 1.0f)
 	};
 	indices = std::vector<GLuint>{
 		// Front
@@ -69,7 +82,20 @@ void Direction::loadData()
 		0,2,
 		1,3,
 		4,6,
-		5,7
+		5,7,
+
+		1, 8,
+		0, 9,
+		2, 10,
+		3, 11,
+
+		8,10,
+		9,11,
+
+		8, 12,
+		9, 12,
+		10, 12,
+		11, 12
 	};
 	Vertex tempVert;
 	tempVert.Color = _color;

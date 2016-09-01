@@ -10,6 +10,7 @@ public:
 	void update(glm::mat4& view, glm::mat4& projection);
 	// Draw the object!
 	void render();
+	void setPos(const glm::vec3& position);
 private:
 	void loadData();
 	glm::vec3 _color;
