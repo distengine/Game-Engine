@@ -1,7 +1,7 @@
 #pragma once
-#include "../Drawable.h"
+#include "../Graphics/Drawable.h"
 
-class Direction : public Drawable
+class Vector : public Drawable
 {
 public:
 	// Create a line 

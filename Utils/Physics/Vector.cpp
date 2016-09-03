@@ -1,8 +1,8 @@
-#include "Direction.h"
+#include "Vector.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-void Direction::create(const glm::vec3& directionPosition, const glm::vec3& directionVector, const glm::vec3& color)
+void Vector::create(const glm::vec3& directionPosition, const glm::vec3& directionVector, const glm::vec3& color)
 {
 	_color = color;
 	loadData();
@@ -16,13 +16,13 @@ void Direction::create(const glm::vec3& directionPosition, const glm::vec3& dire
 	model = glm::rotate(model, glm::radians(90.0f), directionVector);
 }
 
-void Direction::update(glm::mat4& view, glm::mat4& projection)
+void Vector::update(glm::mat4& view, glm::mat4& projection)
 {
 	this->view = view;
 	this->projection = projection;
 }
 
-void Direction::render()
+void Vector::render()
 {
 	// Bind our shaders for use
 	shaders.use();
@@ -39,13 +39,13 @@ void Direction::render()
 	shaders.unuse();
 }
 
-void Direction::setPos(const glm::vec3& position)
+void Vector::setPos(const glm::vec3& position)
 {
 	model = glm::mat4();
 	model = glm::translate(model, position);
 }
 
-void Direction::loadData()
+void Vector::loadData()
 {
 	std::initializer_list<glm::vec3> tempPos{
 		glm::vec3(-0.01f,  0.01f,  0.6f),
