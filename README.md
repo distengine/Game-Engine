@@ -1,38 +1,34 @@
 # Game-Engine
 An OpenGL Game Engine made with SFML
 
-This engine currently has:
+
+-- Upcomming Featues
+
+[] Raycasting
+
+[] Basic Physics
+
+[] Particles
+
+[] Lighting
 
 
--A base drawable class
+--Completed Features
 
--Shapes
+[x] Text Rendering
 
---Cube
+[x] Bounding Box Collision Tests
 
---Vector/Direction ( for normal visualization and ray casting )
+[x] Daily Commits with actual code
 
--Aligned Bounding box
+[x] Cube and Vector Shapes
 
--GLSL system
+[x] 3D Camera System with Ortho support for 2D/2.5D
 
--Terrain system with height maps ( not yet pushed )
+[] x Semi Completed, Haven't pushed it yet due to unsatisfaction of the code format and flow
 
-
-TODO:
-
-
--Push the terrain system
-
--Finish implementing the ray picking system
-
--Add a Particle system
-
--Add a lighting system
-
--Finish the text system ( Currently only works in ortho projection ) - DONE
-
--Generally flesh out the engine more and clean up a lot of code
-
--Remember to comment the rest of the code.
-
+Examples of the engine and some simple code usages
+![Vector class](http://image.prntscr.com/image/fd4894517a904d94aa760e895b6ca62f.png)
+![Cube and Bounding Box](http://image.prntscr.com/image/fbda35751c304a928567ecf4093b1f42.png)
+![Skybox](http://image.prntscr.com/image/1c5963d5f4eb485a981af06fc67d3306.png)
+![Text class](http://image.prntscr.com/image/e86dd5b67746445191950f53b0f13cec.png)
