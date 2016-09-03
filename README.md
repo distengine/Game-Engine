@@ -30,7 +30,7 @@ TODO:
 
 -Add a lighting system
 
--Finish the text system ( Currently only works in ortho projection )
+-Finish the text system ( Currently only works in ortho projection ) - DONE
 
 -Generally flesh out the engine more and clean up a lot of code
 
