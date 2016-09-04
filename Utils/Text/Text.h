@@ -10,6 +10,7 @@ public:
 	void setOrtho(const glm::vec4& ortho);
 	void setPosition(GLfloat xPos, GLfloat yPos);
 	void render(FreeFont& font);
+	void setText(const std::string& text);
 private:
 	void loadBuffers() override;
 

@@ -8,7 +8,7 @@
 void Window::createWindow(const int& width, const int& height, const std::string& title, const unsigned& style, const sf::ContextSettings& settings)
 {
 	_window.create(sf::VideoMode(width, height), title, style, settings);
-	_window.setFramerateLimit(144);
+	_window.setFramerateLimit(60);
 	_window.setMouseCursorVisible(false);
 	createGLContext();
 }

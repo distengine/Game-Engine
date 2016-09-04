@@ -70,6 +70,11 @@ void Text::render(FreeFont& font)
 	shaders.unuse();
 }
 
+void Text::setText(const std::string& text)
+{
+	_text = text;
+}
+
 void Text::loadBuffers()
 {
 	glGenVertexArrays(1, &vao);
